@@ -18,12 +18,12 @@
 //	0~59 Counter
 //	--------------------------------------------------
 module cnt60(	o_cnt60,
-				          clk,
-				        rst_n);
+	        clk    ,
+	        rst_n  );
 
-output	[5:0]	o_cnt60		;
-input			     clk			   ;
-input			     rst_n		  ;
+output	[5:0]	o_cnt60		  ;
+input	        clk	          ;
+input	        rst_n		  ;
 
 reg		[5:0]	o_cnt60		  ;
 always @(posedge clk or negedge rst_n) begin
@@ -45,18 +45,18 @@ endmodule
 //	Hz of o_gen_clk = Clock Hz / num
 //	--------------------------------------------------
 module	nco(	o_gen_clk,
-				    i_nco_num,
-				    clk,
-				    rst_n);
+	        i_nco_num,
+		clk,
+		rst_n     );
 
-output		   	o_gen_clk	;	// 1Hz CLK
+output	       o_gen_clk	;	// 1Hz CLK
 
 input	[31:0]	i_nco_num	;
-input			     clk			;	// 50Mhz CLK
-input			     rst_n		;
+input	        clk	        ;	// 50Mhz CLK
+input	        rst_n		;
 
 reg		[31:0]	cnt			;
-reg			     	o_gen_clk	;
+reg			o_gen_clk	        ;
 
 always @(posedge clk or negedge rst_n) begin
 	if(rst_n == 1'b0) begin
@@ -78,27 +78,27 @@ endmodule
 //	NCO Clock Based 0~59 Counter
 //	--------------------------------------------------
 module	nco_cnt(
-				       o_nco_cnt,
-				       i_nco_num,
-				       clk,
-				       rst_n     );
+		 o_nco_cnt,
+		 i_nco_num,
+		 clk      ,
+		 rst_n     );
 
 output	[5:0]	o_nco_cnt	   ;
 
 input	[31:0]	i_nco_num	   ;
-input			     clk			       ;
-input			     rst_n		      ;
+input		clk		   ;
+input	        rst_n		   ;
 
-wire			      gen_clk		    ;
+wire		gen_clk		   ;
 
 nco		u_nco(	.o_gen_clk	( gen_clk	),
-				    .i_nco_num	( i_nco_num	),
-				    .clk		( clk		),
-				    .rst_n		( rst_n		));
+			.i_nco_num	( i_nco_num	),
+			.clk		( clk		),
+			.rst_n		( rst_n		));
 
 cnt60	u_cnt60(.o_cnt60	( o_nco_cnt	),
-				      .clk		( gen_clk	),
-				      .rst_n		( rst_n		));
+		.clk		( gen_clk	),
+		.rst_n		( rst_n		));
  
 endmodule
 
@@ -106,7 +106,7 @@ endmodule
 //	Flexible Numerical Display Decoder
 //	--------------------------------------------------
 module	fnd_dec(o_seg,
-				i_num);
+		i_num);
 
 output	[6:0]	o_seg		;	// {o_seg_a, o_seg_b, ... , o_seg_g}
 
@@ -137,14 +137,14 @@ endmodule
 //	0~59 --> 2 Separated Segments
 //	--------------------------------------------------
 module	double_fig_sep(
-				o_left,
-				o_right,
-				i_double_fig);
+			o_left,
+			o_right,
+			i_double_fig);
 
 output	[3:0]	o_left		;
 output	[3:0]	o_right		;
 
-input	 [5:0]	i_double_fig;
+input	 [5:0]	i_double_fig  ;
 
 assign	o_left   = i_double_fig / 10;
 assign	o_right  = i_double_fig % 10;
@@ -155,28 +155,28 @@ endmodule
 //	0~59 --> 2 Separated Segments
 //	--------------------------------------------------
 module	led_disp(
-				o_seg,
-				o_seg_dp,
-				o_seg_enb,
-				i_six_digit_seg,
-				i_six_dp,
-				clk,
-				rst_n);
+			o_seg,
+			o_seg_dp,
+			o_seg_enb,
+			i_six_digit_seg,
+			i_six_dp,
+			clk,
+			rst_n);
 
 output	[5:0]	o_seg_enb		  ;
-output		    	o_seg_dp	   	;
-output	[6:0]	o_seg			     ;
+output		o_seg_dp	   	  ;
+output	[6:0]	o_seg			  ;
 
-input	[41:0]	i_six_digit_seg	;
-input	[5:0]	 i_six_dp		;
-input			     clk				;
-input			     rst_n			;
+input	[41:0]	i_six_digit_seg	 ;
+input	[5:0]   i_six_dp	 ;
+input		clk	         ;
+input		rst_n	         ;
 
 wire			gen_clk		;
 nco		u_nco(	.o_gen_clk	( gen_clk		),
-				    .i_nco_num	( 32'd50000	),
-				    .clk		( clk			),
-				    .rst_n		( rst_n			));
+		        .i_nco_num	( 32'd50000	        ),
+			.clk		( clk			),
+			.rst_n		( rst_n			));
 
 reg		[3:0]	cnt_common_node	;
 always @(posedge gen_clk or negedge rst_n) begin
@@ -240,10 +240,10 @@ module	top_nco_cnt_disp(
 				rst_n);
 
 output	[5:0]	o_seg_enb	     ;
-output			    o_seg_dp	      ;
-output	[6:0]	o_seg		        ;
+output	        o_seg_dp	     ;
+output	[6:0]	o_seg		     ;
 
-input			     clk			         ;
+input			     clk	                ;
 input			     rst_n		        ;
 
 wire         [5:0]nco_cnt        ;
@@ -255,24 +255,24 @@ wire         [6:0]seg_right      ;
 nco_cnt         u_nco_cnt(.o_nco_cnt  (nco_cnt     ),
                           .i_nco_num  (32'd50000000),
                           .clk        (clk         ),
-                          .rst_n      (rst_n       ))             ;
+                          .rst_n      (rst_n       ));
                     
 double_fig_sep  u_double_fig_sep  (.o_left       (left       ),
-				                           .o_right      (right      ),
-				                           .i_double_fig (nco_cnt    ))   ;
+				   .o_right      (right      ),
+				   .i_double_fig (nco_cnt    ))   ;
 				                          
 fnd_dec         u0_fnd_dec        (.o_seg      (seg_left ),
-				                           .i_num      (left     ))       ;		
+				   .i_num      (left     ))       ;		
 				                           
 fnd_dec 			     u1_fnd_dec        (.o_seg      (seg_right ), 
-				                           .i_num      (right    ))       ;	                    		                          
+				                        .i_num      (right    ));	                    		                          
 wire     [41:0] six_digit_seg;
 assign   six_digit_seg = { {4{7'b0000000}}, seg_left, seg_right } ;                    
                     
 led_disp        u_led_disp   (.o_seg             (o_seg        ),
 				                      .o_seg_dp          (o_seg_dp     ),
 				                      .o_seg_enb         (o_seg_enb    ),
-			                        .i_six_digit_seg   (six_digit_seg),
+			                              .i_six_digit_seg   (six_digit_seg),
 				                      .i_six_dp          (6'd0         ),
 				                      .clk               (clk          ),
 				                      .rst_n             (rst_n        ));

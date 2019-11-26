@@ -21,4 +21,9 @@
 
 ## 결과 ### **Top Module 의 DUT/TestBench Code 및 Waveform 검증**
 ![](https://github.com/tweetyzz/LogicDesign/blob/master/practice09/%EC%BA%A1%EC%B2%98.(practice09).PNG)
+
+: leader code 가 0->1 로 변할 때 부터 data 받기 시작, custom code와 data code 이어서 받게 됨. 
+
 ![](https://github.com/tweetyzz/LogicDesign/blob/master/practice09/practice09%20%EC%82%AC%EC%A7%84.jpg)
+
+: 리모콘을 이용해 display에 표시.

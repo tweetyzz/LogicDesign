@@ -17,8 +17,10 @@
 parameter	IDLE		= 2'b00	;
 parameter	LEADCODE	= 2'b01	;	// 1->0으로 이면 신호 들어왔다고 인식
 parameter	DATACODE	= 2'b10	;	// 32bit의 데이터 들어옴
-parameter	COMPLETE	= 2'b11	;	// 32bit의 데이터가 다 들어왔을 경우 완료, 다시 idle 로 돌아감
+parameter	COMPLETE	= 2'b11	;	// 32bit의 데이터가 다 들어왔을 경우 완료, 다시 idle 로 돌아감 
 ```
+
+
 #### **Top module** : ir_rx와 fnd_dec, led_disp 모듈을 연결
 
 ### FPGA 실습  : 리모콘을 이용해 리모콘 소자의 값을 led display로 출력
